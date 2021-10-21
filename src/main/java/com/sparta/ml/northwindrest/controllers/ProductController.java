@@ -17,7 +17,7 @@ public class ProductController {
 
     @Autowired
     public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/northwind/products")
