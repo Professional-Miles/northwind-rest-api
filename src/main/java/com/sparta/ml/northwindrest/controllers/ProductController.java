@@ -21,9 +21,20 @@ public class ProductController {
     }
 
     @GetMapping("/northwind/products")
-    public List<ProductEntity> getAllProducts(){
-        return productRepository.findAll();
+    @ResponseBody
+    public List<ProductEntity> getAllProducts(@RequestParam(required = false) String name){
+        if (name == null){
+            return productRepository.findAll();
+        }
+        List<ProductEntity> foundProducts = new ArrayList<>();
+        for (ProductEntity productEntity: productRepository.findAll()){
+            if (productEntity.getProductName().contains(name)){
+                foundProducts.add(productEntity);
+            }
+        }
+        return foundProducts;
     }
+
 
     @GetMapping("/northwind/products/{id}")
     public Optional<ProductEntity> getProductsById(@PathVariable Integer id){
