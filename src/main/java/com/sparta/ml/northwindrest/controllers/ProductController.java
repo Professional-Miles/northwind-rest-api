@@ -41,7 +41,16 @@ public class ProductController {
         return foundCustomers;
     }
 
-
+    @GetMapping("/northwind/products/available")
+    public List<ProductEntity> getAllAvailableProducts(){
+        List<ProductEntity> foundCustomers = new ArrayList<>();
+        for (ProductEntity productEntity: productRepository.findAll()){
+            if (productEntity.getDiscontinued().equals(false)){
+                foundCustomers.add(productEntity);
+            }
+        }
+        return foundCustomers;
+    }
 
 
 }
