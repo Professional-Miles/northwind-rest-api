@@ -1,6 +1,5 @@
 package com.sparta.ml.northwindrest.controllers;
 
-import com.sparta.ml.northwindrest.entities.CustomerEntity;
 import com.sparta.ml.northwindrest.entities.ProductEntity;
 import com.sparta.ml.northwindrest.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,8 @@ public class ProductController {
 
     @GetMapping("/northwind/products")
     @ResponseBody
-    public List<ProductEntity> getAllProducts(@RequestParam(required = false) String name){
-        if (name == null){
+    public List<ProductEntity> getAllProducts(@RequestParam(required = false) String name) {
+        if (name == null) {
             return productRepository.findAll();
         }
         return productRepository.findAll()
@@ -33,17 +32,16 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-
     @GetMapping("/northwind/products/{id}")
-    public Optional<ProductEntity> getProductsById(@PathVariable Integer id){
+    public Optional<ProductEntity> getProductsById(@PathVariable Integer id) {
         return productRepository.findById(id);
     }
 
     @GetMapping("/northwind/products/discontinued")
-    public List<ProductEntity> getAllDiscontinuedProducts(){
+    public List<ProductEntity> getAllDiscontinuedProducts() {
         List<ProductEntity> foundCustomers = new ArrayList<>();
-        for (ProductEntity productEntity: productRepository.findAll()){
-            if (productEntity.getDiscontinued().equals(true)){
+        for (ProductEntity productEntity : productRepository.findAll()) {
+            if (productEntity.getDiscontinued().equals(true)) {
                 foundCustomers.add(productEntity);
             }
         }
@@ -51,15 +49,13 @@ public class ProductController {
     }
 
     @GetMapping("/northwind/products/available")
-    public List<ProductEntity> getAllAvailableProducts(){
+    public List<ProductEntity> getAllAvailableProducts() {
         List<ProductEntity> foundCustomers = new ArrayList<>();
-        for (ProductEntity productEntity: productRepository.findAll()){
-            if (productEntity.getDiscontinued().equals(false)){
+        for (ProductEntity productEntity : productRepository.findAll()) {
+            if (productEntity.getDiscontinued().equals(false)) {
                 foundCustomers.add(productEntity);
             }
         }
         return foundCustomers;
     }
-
-
 }
