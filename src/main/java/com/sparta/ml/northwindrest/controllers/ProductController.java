@@ -5,7 +5,6 @@ import com.sparta.ml.northwindrest.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,26 +38,17 @@ public class ProductController {
 
     @GetMapping("/northwind/products/discontinued")
     public List<ProductEntity> getAllDiscontinuedProducts() {
-        List<ProductEntity> foundCustomers = new ArrayList<>();
-        for (ProductEntity productEntity : productRepository.findAll()) {
-            if (productEntity.getDiscontinued().equals(true)) {
-                foundCustomers.add(productEntity);
-            }
-        }
-        return foundCustomers;
+        return productRepository.findAll()
+                .stream()
+                .filter(productEntity -> productEntity.getDiscontinued().equals(true))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/northwind/products/available")
     public List<ProductEntity> getAllAvailableProducts() {
-        List<ProductEntity> foundCustomers = new ArrayList<>();
-        for (ProductEntity productEntity : productRepository.findAll()) {
-            if (productEntity.getDiscontinued().equals(false)) {
-                foundCustomers.add(productEntity);
-            }
-        }
-        return foundCustomers;
+        return productRepository.findAll()
+                .stream()
+                .filter(productEntity -> productEntity.getDiscontinued().equals(false))
+                .collect(Collectors.toList());
     }
-
-
-
 }
