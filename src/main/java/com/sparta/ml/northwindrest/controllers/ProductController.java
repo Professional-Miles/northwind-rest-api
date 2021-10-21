@@ -31,9 +31,25 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/northwind/products/{id}")
-    public Optional<ProductEntity> getProductsById(@PathVariable Integer id) {
+    @GetMapping(value="/northwind/products", params={"id"})
+    public Optional<ProductEntity> getProductsById(@RequestParam Integer id) {
         return productRepository.findById(id);
+    }
+
+    @GetMapping(value="/northwind/products", params={"supplierId"})
+    public List<ProductEntity> getProductsBySupplierName(@RequestParam Integer supplierId) {
+        return productRepository.findAll()
+                .stream()
+                .filter(productEntity -> productEntity.getSupplierID().equals(supplierId))
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value="/northwind/products", params={"categoryId"})
+    public List<ProductEntity> getProductsByCategoryName(@RequestParam Integer categoryId) {
+        return productRepository.findAll()
+                .stream()
+                .filter(productEntity -> productEntity.getCategoryID().equals(categoryId))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/northwind/products/discontinued")
