@@ -18,11 +18,13 @@ public class ProductEntity {
     @Column(name = "ProductName", nullable = false, length = 40)
     private String productName;
 
-    @Column(name = "SupplierID")
-    private Integer supplierID;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "SupplierID")
+    private SupplierEntity supplier;
 
-    @Column(name = "CategoryID")
-    private Integer categoryID;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "CategoryID")
+    private CategoryEntity category;
 
     @Column(name = "QuantityPerUnit", length = 20)
     private String quantityPerUnit;
@@ -90,20 +92,28 @@ public class ProductEntity {
         this.quantityPerUnit = quantityPerUnit;
     }
 
-    public Integer getCategoryID() {
-        return categoryID;
+    public SupplierEntity getSupplier() {
+        return supplier;
     }
 
-    public void setCategoryID(Integer categoryID) {
-        this.categoryID = categoryID;
+    public String getSupplierName(){
+        return getSupplier().getCompanyName();
     }
 
-    public Integer getSupplierID() {
-        return supplierID;
+    public void setSupplier(SupplierEntity supplier) {
+        this.supplier = supplier;
     }
 
-    public void setSupplierID(Integer supplierID) {
-        this.supplierID = supplierID;
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    public String getCategoryName(){
+        return getCategory().getCategoryName();
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 
     public String getProductName() {

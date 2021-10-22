@@ -1,70 +1,58 @@
 package com.sparta.ml.northwindrest.controllers;
 
-import com.sparta.ml.northwindrest.entities.ProductEntity;
-import com.sparta.ml.northwindrest.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sparta.ml.northwindrest.dto.ProductDTO;
+import com.sparta.ml.northwindrest.services.ProductService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class ProductController {
 
-    private final ProductRepository productRepository;
-
-    @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    @Resource
+    private ProductService productService;
 
     @GetMapping("/northwind/products")
     @ResponseBody
-    public List<ProductEntity> getAllProducts(@RequestParam(required = false) String name) {
-        if (name == null) {
-            return productRepository.findAll();
-        }
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getProductName().contains(name))
-                .collect(Collectors.toList());
+    public List<ProductDTO> getAllProducts(){
+        return productService.getAllProducts();
     }
 
-    @GetMapping(value="/northwind/products", params={"id"})
-    public Optional<ProductEntity> getProductsById(@RequestParam Integer id) {
-        return productRepository.findById(id);
+    @GetMapping(value="/northwind/products", params={"productId"})
+    @ResponseBody
+    public List<ProductDTO> getProductsById(@RequestParam Integer productId) {
+        return productService.getProductsByProductId(productId);
     }
 
     @GetMapping(value="/northwind/products", params={"supplierId"})
-    public List<ProductEntity> getProductsBySupplierName(@RequestParam Integer supplierId) {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getSupplierID().equals(supplierId))
-                .collect(Collectors.toList());
+    @ResponseBody
+    public List<ProductDTO> getProductsBySupplierId(@RequestParam Integer supplierId) {
+            return productService.getProductsBySupplier(supplierId);
     }
 
     @GetMapping(value="/northwind/products", params={"categoryId"})
-    public List<ProductEntity> getProductsByCategoryName(@RequestParam Integer categoryId) {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getCategoryID().equals(categoryId))
-                .collect(Collectors.toList());
+    @ResponseBody
+    public List<ProductDTO> getProductsByCategoryId(@RequestParam Integer categoryId) {
+        return productService.getProductsByCategory(categoryId);
     }
 
-    @GetMapping("/northwind/products/discontinued")
-    public List<ProductEntity> getAllDiscontinuedProducts() {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getDiscontinued().equals(true))
-                .collect(Collectors.toList());
+    @GetMapping(value="/northwind/products", params = {"name"})
+    @ResponseBody
+    public List<ProductDTO> getProductsByName(@RequestParam(required = false) String name) {
+        return productService.getProductsByName(name);
     }
 
     @GetMapping("/northwind/products/available")
-    public List<ProductEntity> getAllAvailableProducts() {
-        return productRepository.findAll()
-                .stream()
-                .filter(productEntity -> productEntity.getDiscontinued().equals(false))
-                .collect(Collectors.toList());
+    @ResponseBody
+    public List<ProductDTO> getAvailableProducts() {
+        return productService.getAvailableProducts();
     }
+
+    @GetMapping("/northwind/products/discontinued")
+    @ResponseBody
+    public List<ProductDTO> getDiscontinuedProducts() {
+        return productService.getDiscontinuedProducts();
+    }
+
 }
