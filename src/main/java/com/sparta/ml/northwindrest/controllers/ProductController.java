@@ -1,34 +1,58 @@
 package com.sparta.ml.northwindrest.controllers;
 
-import com.sparta.ml.northwindrest.entities.ProductEntity;
-import com.sparta.ml.northwindrest.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.sparta.ml.northwindrest.dto.ProductDTO;
+import com.sparta.ml.northwindrest.services.ProductService;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ProductController {
 
-    private final ProductRepository productRepository;
-
-    @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    @Resource
+    private ProductService productService;
 
     @GetMapping("/northwind/products")
-    public List<ProductEntity> getAllProducts(){
-        return productRepository.findAll();
+    @ResponseBody
+    public List<ProductDTO> getAllProducts(){
+        return productService.getAllProducts();
     }
 
-    @GetMapping("/northwind/products/{id}")
-    public Optional<ProductEntity> getProductsById(@PathVariable Integer id){
-        return productRepository.findById(id);
+    @GetMapping(value="/northwind/products", params={"productId"})
+    @ResponseBody
+    public List<ProductDTO> getProductsById(@RequestParam Integer productId) {
+        return productService.getProductsByProductId(productId);
     }
 
+    @GetMapping(value="/northwind/products", params={"supplierId"})
+    @ResponseBody
+    public List<ProductDTO> getProductsBySupplierId(@RequestParam Integer supplierId) {
+            return productService.getProductsBySupplier(supplierId);
+    }
+
+    @GetMapping(value="/northwind/products", params={"categoryId"})
+    @ResponseBody
+    public List<ProductDTO> getProductsByCategoryId(@RequestParam Integer categoryId) {
+        return productService.getProductsByCategory(categoryId);
+    }
+
+    @GetMapping(value="/northwind/products", params = {"name"})
+    @ResponseBody
+    public List<ProductDTO> getProductsByName(@RequestParam(required = false) String name) {
+        return productService.getProductsByName(name);
+    }
+
+    @GetMapping("/northwind/products/available")
+    @ResponseBody
+    public List<ProductDTO> getAvailableProducts() {
+        return productService.getAvailableProducts();
+    }
+
+    @GetMapping("/northwind/products/discontinued")
+    @ResponseBody
+    public List<ProductDTO> getDiscontinuedProducts() {
+        return productService.getDiscontinuedProducts();
+    }
 
 }
