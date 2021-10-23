@@ -2,7 +2,7 @@ package com.sparta.ml.northwindrest.dto;
 
 import java.math.BigDecimal;
 
-public class ProductDTO {
+public class ProductDTO extends DTO{
 
     private Integer id;
     private String productName;
@@ -67,4 +67,5 @@ public class ProductDTO {
     public void setDiscontinued(Boolean discontinued) {
         this.discontinued = discontinued;
     }
+
 }
