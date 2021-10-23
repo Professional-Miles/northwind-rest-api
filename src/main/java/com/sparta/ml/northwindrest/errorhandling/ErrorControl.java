@@ -4,7 +4,6 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,6 @@ public class ErrorControl implements ErrorController {
                 return "error-500";
             }
         }
-        return "error";
+        return "error-404";
     }
-
 }
