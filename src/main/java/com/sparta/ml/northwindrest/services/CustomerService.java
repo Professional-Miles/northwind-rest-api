@@ -55,15 +55,12 @@ public class CustomerService {
         return thisList;
     }
 
-
     private CustomerDTO convertToCustomerDTO(CustomerEntity customerEntity) {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setId(customerEntity.getId());
         customerDTO.setCompanyName(customerEntity.getCompanyName());
         customerDTO.setContactName(customerEntity.getContactName());
         customerDTO.setContactTitle(customerEntity.getContactTitle());
-        customerDTO.setCity(customerEntity.getCity());
-        customerDTO.setCountry(customerEntity.getCountry());
 
         return customerDTO;
     }

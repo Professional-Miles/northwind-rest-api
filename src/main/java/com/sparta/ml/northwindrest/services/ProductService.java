@@ -70,43 +70,35 @@ public class ProductService {
     }
 
     public List<DTO> getProductsByName(String name) {
-        if (name != null) {
-            return productRepository
+            List<DTO> thisList = productRepository
                     .findAll()
                     .stream()
                     .filter(productEntity -> productEntity.getProductName().contains(name))
                     .map(this::convertToProductDTO)
                     .collect(Collectors.toList());
+
+        if (thisList.isEmpty()) {
+            return ErrorControl.emptyList();
         }
-        return getAllProducts();
+        return thisList;
     }
 
     public List<DTO> getAvailableProducts() {
-        List<DTO> thisList =
-                productRepository
+        return productRepository
                         .findAll()
                         .stream()
                         .filter(productEntity -> productEntity.getDiscontinued().equals(false))
                         .map(this::convertToProductDTO)
                         .collect(Collectors.toList());
-        if (thisList.isEmpty()) {
-            return ErrorControl.emptyList();
-        }
-        return thisList;
     }
 
     public List<DTO> getDiscontinuedProducts() {
-        List<DTO> thisList =
-         productRepository
+        return productRepository
                 .findAll()
                 .stream()
                 .filter(productEntity -> productEntity.getDiscontinued().equals(true))
                 .map(this::convertToProductDTO)
                 .collect(Collectors.toList());
-        if (thisList.isEmpty()) {
-            return ErrorControl.emptyList();
-        }
-        return thisList;
     }
 
     private ProductDTO convertToProductDTO(ProductEntity productEntity) {

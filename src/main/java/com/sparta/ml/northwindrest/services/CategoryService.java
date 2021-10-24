@@ -41,15 +41,17 @@ public class CategoryService {
     }
 
     public List<DTO> getCategoriesByName(String name) {
-        if (name != null) {
-            return categoryRepository
+            List<DTO> thisList = categoryRepository
                     .findAll()
                     .stream()
                     .filter(categoryEntity -> categoryEntity.getCategoryName().contains(name))
                     .map(this::convertToCategoryDTO)
                     .collect(Collectors.toList());
+
+        if (thisList.isEmpty()) {
+            return ErrorControl.emptyList();
         }
-        return getAllCategories();
+        return thisList;
     }
 
     private CategoryDTO convertToCategoryDTO(CategoryEntity categoryEntity) {

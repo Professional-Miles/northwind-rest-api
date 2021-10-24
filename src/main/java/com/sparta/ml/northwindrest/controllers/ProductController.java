@@ -39,7 +39,7 @@ public class ProductController {
 
     @GetMapping(value="/northwind/products", params = {"name"})
     @ResponseBody
-    public List<DTO> getProductsByName(@RequestParam(required = false) String name) {
+    public List<DTO> getProductsByName(@RequestParam String name) {
         return productService.getProductsByName(name);
     }
 
