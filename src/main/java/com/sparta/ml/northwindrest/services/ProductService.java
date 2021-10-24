@@ -1,7 +1,6 @@
 package com.sparta.ml.northwindrest.services;
 
 import com.sparta.ml.northwindrest.dto.DTO;
-import com.sparta.ml.northwindrest.dto.ErrorDTO;
 import com.sparta.ml.northwindrest.dto.ProductDTO;
 import com.sparta.ml.northwindrest.entities.ProductEntity;
 import com.sparta.ml.northwindrest.errorhandling.ErrorControl;
@@ -9,7 +8,6 @@ import com.sparta.ml.northwindrest.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
