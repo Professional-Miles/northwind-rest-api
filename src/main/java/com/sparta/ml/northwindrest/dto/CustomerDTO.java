@@ -4,7 +4,7 @@ public class CustomerDTO extends DTO{
 
     private String id;
     private String companyName;
-    private String customerName;
+    private String contactName;
     private String contactTitle;
     private String city;
     private String country;
@@ -25,12 +25,12 @@ public class CustomerDTO extends DTO{
         this.companyName = companyName;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getContactName() {
+        return contactName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setContactName(String customerName) {
+        this.contactName = customerName;
     }
 
     public String getContactTitle() {
