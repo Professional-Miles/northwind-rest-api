@@ -30,5 +30,14 @@ public class CustomerController {
         return customerService.getCustomersByCustomerId(customerId);
     }
 
+    @GetMapping(value="/northwind/customers", params={"contactName"})
+    @ResponseBody
+    public List<DTO> getCustomerByContactName(@RequestParam String contactName) {
+        return customerService.getCustomersByContactName(contactName);
+    }
+
+
+
+
 
 }

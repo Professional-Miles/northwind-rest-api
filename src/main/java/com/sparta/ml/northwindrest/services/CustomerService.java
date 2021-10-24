@@ -30,7 +30,22 @@ public class CustomerService {
                 customerRepository
                         .findAll()
                         .stream()
-                        .filter(customerEntity -> customerEntity.getId().equals(customerId))
+                        .filter(customerEntity -> customerEntity.getId().contains(customerId))
+                        .map(this::convertToCustomerDTO)
+                        .collect(Collectors.toList());
+
+        if (thisList.isEmpty()) {
+            return ErrorControl.emptyList();
+        }
+        return thisList;
+    }
+
+    public List<DTO> getCustomersByContactName(String name) {
+        List<DTO> thisList =
+                customerRepository
+                        .findAll()
+                        .stream()
+                        .filter(customerEntity -> customerEntity.getContactName().contains(name))
                         .map(this::convertToCustomerDTO)
                         .collect(Collectors.toList());
 
