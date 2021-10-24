@@ -1,4 +1,4 @@
-package com.sparta.ml.northwindrest.app;
+package com.sparta.ml.northwindrest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

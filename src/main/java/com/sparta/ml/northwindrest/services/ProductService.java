@@ -4,6 +4,7 @@ import com.sparta.ml.northwindrest.dto.DTO;
 import com.sparta.ml.northwindrest.dto.ErrorDTO;
 import com.sparta.ml.northwindrest.dto.ProductDTO;
 import com.sparta.ml.northwindrest.entities.ProductEntity;
+import com.sparta.ml.northwindrest.errorhandling.ErrorControl;
 import com.sparta.ml.northwindrest.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class ProductService {
                         .collect(Collectors.toList());
 
         if (thisList.isEmpty()) {
-            return emptyList();
+            return ErrorControl.emptyList();
         }
         return thisList;
     }
@@ -51,7 +52,7 @@ public class ProductService {
                         .collect(Collectors.toList());
 
         if (thisList.isEmpty()) {
-            return emptyList();
+            return ErrorControl.emptyList();
         }
         return thisList;
     }
@@ -65,7 +66,7 @@ public class ProductService {
                         .map(this::convertToProductDTO)
                         .collect(Collectors.toList());
         if (thisList.isEmpty()) {
-            return emptyList();
+            return ErrorControl.emptyList();
         }
         return thisList;
     }
@@ -91,7 +92,7 @@ public class ProductService {
                         .map(this::convertToProductDTO)
                         .collect(Collectors.toList());
         if (thisList.isEmpty()) {
-            return emptyList();
+            return ErrorControl.emptyList();
         }
         return thisList;
     }
@@ -105,11 +106,10 @@ public class ProductService {
                 .map(this::convertToProductDTO)
                 .collect(Collectors.toList());
         if (thisList.isEmpty()) {
-            return emptyList();
+            return ErrorControl.emptyList();
         }
         return thisList;
     }
-
 
     private ProductDTO convertToProductDTO(ProductEntity productEntity) {
         ProductDTO productDTO = new ProductDTO();
@@ -123,13 +123,5 @@ public class ProductService {
 
         return productDTO;
     }
-
-    private List<DTO> emptyList() {
-        ErrorDTO dto = new ErrorDTO();
-        ArrayList<DTO> dtoList = new ArrayList<>();
-        dtoList.add(dto);
-        return dtoList;
-    }
-
 
 }
