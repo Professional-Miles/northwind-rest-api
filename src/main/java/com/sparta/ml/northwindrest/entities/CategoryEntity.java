@@ -2,7 +2,7 @@ package com.sparta.ml.northwindrest.entities;
 
 import javax.persistence.*;
 
-@Table(name = "categories",schema = "northwind", indexes = {
+@Table(name = "categories", schema = "northwind", indexes = {
         @Index(name = "CategoryName", columnList = "CategoryName", unique = true)
 })
 @Entity
