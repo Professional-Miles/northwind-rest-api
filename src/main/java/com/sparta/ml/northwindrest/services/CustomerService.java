@@ -2,9 +2,8 @@ package com.sparta.ml.northwindrest.services;
 
 import com.sparta.ml.northwindrest.dto.CustomerDTO;
 import com.sparta.ml.northwindrest.dto.DTO;
-import com.sparta.ml.northwindrest.dto.ProductDTO;
 import com.sparta.ml.northwindrest.entities.CustomerEntity;
-import com.sparta.ml.northwindrest.entities.ProductEntity;
+import com.sparta.ml.northwindrest.errorhandling.ErrorControl;
 import com.sparta.ml.northwindrest.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +23,21 @@ public class CustomerService {
                 .stream()
                 .map(this::convertToCustomerDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<DTO> getCustomersByCustomerId(String customerId) {
+        List<DTO> thisList =
+                customerRepository
+                        .findAll()
+                        .stream()
+                        .filter(customerEntity -> customerEntity.getId().equals(customerId))
+                        .map(this::convertToCustomerDTO)
+                        .collect(Collectors.toList());
+
+        if (thisList.isEmpty()) {
+            return ErrorControl.emptyList();
+        }
+        return thisList;
     }
 
 
