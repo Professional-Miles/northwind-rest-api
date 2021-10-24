@@ -1,36 +1,34 @@
 package com.sparta.ml.northwindrest.controllers;
 
-import com.sparta.ml.northwindrest.entities.CustomerEntity;
-import com.sparta.ml.northwindrest.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sparta.ml.northwindrest.dto.DTO;
+import com.sparta.ml.northwindrest.services.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
 public class CustomerController {
 
-    private final CustomerRepository customerRepository;
-
-    @Autowired
-    public CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+    @Resource
+    private CustomerService customerService;
 
     @GetMapping("/northwind/customers")
     @ResponseBody
-    public List<CustomerEntity> getAllCustomers(@RequestParam(required = false) String name){
-        if (name == null){
-            return customerRepository.findAll();
-        }
-        List<CustomerEntity> foundCustomers = new ArrayList<>();
-        for (CustomerEntity customerEntity: customerRepository.findAll()){
-            if (customerEntity.getContactName().contains(name)){
-                foundCustomers.add(customerEntity);
-            }
-        }
-        return foundCustomers;
+    public List<DTO> getAllCustomers(){
+        return customerService.getAllCustomers();
+    }
+
+    @GetMapping(value="/northwind/customers", params={"customerId"})
+    @ResponseBody
+    public List<DTO> getCustomerById(@RequestParam String customerId) {
+        return customerService.getCustomersByCustomerId(customerId);
+    }
+
+    @GetMapping(value="/northwind/customers", params={"contactName"})
+    @ResponseBody
+    public List<DTO> getCustomerByContactName(@RequestParam String contactName) {
+        return customerService.getCustomersByContactName(contactName);
     }
 
 
