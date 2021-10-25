@@ -1,33 +1,34 @@
 package com.sparta.ml.northwindrest.controllers;
 
-import com.sparta.ml.northwindrest.entities.EmployeeEntity;
-import com.sparta.ml.northwindrest.repositories.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sparta.ml.northwindrest.dto.DTO;
+import com.sparta.ml.northwindrest.services.EmployeeService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@Api(value="employees", description="Operations pertaining to the employees table.")
 public class EmployeeController {
 
-    private final EmployeeRepository employeeRepository;
-
-    @Autowired
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;;
-    }
+    @Resource
+    private EmployeeService employeeService;
 
     @GetMapping("/northwind/employees")
-    public List<EmployeeEntity> getAllEmployees(){
-        return employeeRepository.findAll();
+    @ResponseBody
+    public List<DTO> getAllEmployees(){
+        return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/northwind/employees/{id}")
-    public Optional<EmployeeEntity> getEmployeesById(@PathVariable Integer id){
-        return employeeRepository.findById(id);
+    @GetMapping(value="/northwind/employees/", params={"employeeId"})
+    @ResponseBody
+    public List<DTO> getEmployeesById(@RequestParam Integer employeeId) {
+        return employeeService.getEmployeeByEmployeeId(employeeId);
     }
+
 
 }

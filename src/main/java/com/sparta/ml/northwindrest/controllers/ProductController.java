@@ -1,34 +1,61 @@
 package com.sparta.ml.northwindrest.controllers;
 
-import com.sparta.ml.northwindrest.entities.ProductEntity;
-import com.sparta.ml.northwindrest.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.sparta.ml.northwindrest.dto.DTO;
+import com.sparta.ml.northwindrest.dto.ProductDTO;
+import com.sparta.ml.northwindrest.services.ProductService;
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.*;
+import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
+@Api(value="products", description="Operations pertaining to the products table.")
 public class ProductController {
 
-    private final ProductRepository productRepository;
-
-    @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;;
-    }
+    @Resource
+    private ProductService productService;
 
     @GetMapping("/northwind/products")
-    public List<ProductEntity> getAllProducts(){
-        return productRepository.findAll();
+    @ResponseBody
+    public List<DTO> getAllProducts(){
+        return productService.getAllProducts();
     }
 
-    @GetMapping("/northwind/products/{id}")
-    public Optional<ProductEntity> getProductsById(@PathVariable Integer id){
-        return productRepository.findById(id);
+    @GetMapping(value="/northwind/products/productId/{productId}")
+    @ResponseBody
+    public List<ProductDTO> getProductsById(@PathVariable Integer productId) {
+        return productService.getProductsByProductId(productId);
     }
 
+    @GetMapping(value="/northwind/products/supplierId/{supplierId}")
+    @ResponseBody
+    public List<DTO> getProductsBySupplierId(@PathVariable Integer supplierId) {
+            return productService.getProductsBySupplier(supplierId);
+    }
+
+    @GetMapping(value="/northwind/products/categoryId/{categoryId}")
+    @ResponseBody
+    public List<DTO> getProductsByCategoryId(@PathVariable Integer categoryId) {
+        return productService.getProductsByCategory(categoryId);
+    }
+
+    @GetMapping(value="/northwind/products/name/{name}")
+    @ResponseBody
+    public List<DTO> getProductsByName(@PathVariable String name) {
+        return productService.getProductsByName(name);
+    }
+
+    @GetMapping("/northwind/products/available")
+    @ResponseBody
+    public List<DTO> getAvailableProducts() {
+        return productService.getAvailableProducts();
+    }
+
+    @GetMapping("/northwind/products/discontinued")
+    @ResponseBody
+    public List<DTO> getDiscontinuedProducts() {
+        return productService.getDiscontinuedProducts();
+    }
 
 }

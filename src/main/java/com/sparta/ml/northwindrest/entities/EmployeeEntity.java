@@ -26,6 +26,9 @@ public class EmployeeEntity {
     @Column(name = "TitleOfCourtesy", length = 25)
     private String titleOfCourtesy;
 
+    @Column(name = "Salary")
+    private Float salary;
+
     @Column(name = "BirthDate")
     private Instant birthDate;
 
@@ -59,6 +62,14 @@ public class EmployeeEntity {
 
     @Column(name = "ReportsTo")
     private Integer reportsTo;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getReportsTo() {
         return reportsTo;
@@ -180,11 +191,12 @@ public class EmployeeEntity {
         this.lastName = lastName;
     }
 
-    public Integer getId() {
-        return id;
+
+    public Float getSalary() {
+        return salary;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSalary(Float salary) {
+        this.salary = salary;
     }
 }
