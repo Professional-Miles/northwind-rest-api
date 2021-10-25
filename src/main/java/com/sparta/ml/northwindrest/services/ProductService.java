@@ -1,6 +1,7 @@
 package com.sparta.ml.northwindrest.services;
 
 import com.sparta.ml.northwindrest.dto.DTO;
+import com.sparta.ml.northwindrest.dto.ErrorDTO;
 import com.sparta.ml.northwindrest.dto.ProductDTO;
 import com.sparta.ml.northwindrest.entities.ProductEntity;
 import com.sparta.ml.northwindrest.errorhandling.ErrorControl;
@@ -8,6 +9,7 @@ import com.sparta.ml.northwindrest.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +27,8 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<DTO> getProductsByProductId(Integer productId) {
-        List<DTO> thisList =
+    public List<ProductDTO> getProductsByProductId(Integer productId) {
+        List<ProductDTO> thisList =
                 productRepository
                         .findAll()
                         .stream()
@@ -35,7 +37,7 @@ public class ProductService {
                         .collect(Collectors.toList());
 
         if (thisList.isEmpty()) {
-            return ErrorControl.emptyList();
+            return emptyList();
         }
         return thisList;
     }
@@ -112,6 +114,10 @@ public class ProductService {
         productDTO.setDiscontinued(productEntity.getDiscontinued());
 
         return productDTO;
+    }
+
+    private static List<ProductDTO> emptyList() {
+        return new ArrayList<>();
     }
 
 }

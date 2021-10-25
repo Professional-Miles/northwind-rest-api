@@ -1,5 +1,6 @@
 package com.sparta.ml.northwindrest.dto;
 
+
 public class CategoryDTO extends DTO {
 
     private Integer id;

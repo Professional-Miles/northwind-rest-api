@@ -2,6 +2,7 @@ package com.sparta.ml.northwindrest.controllers;
 
 import com.sparta.ml.northwindrest.dto.DTO;
 import com.sparta.ml.northwindrest.services.CategoryService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -9,6 +10,7 @@ import java.util.List;
 
 
 @RestController
+@Api(value="categories", description="Operations pertaining to the categories table.")
 public class CategoryController {
 
     @Resource
@@ -20,13 +22,13 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
-    @GetMapping(value = "/northwind/categories", params = {"categoryId"})
+    @GetMapping(value = "/northwind/categories/", params = {"categoryId"})
     @ResponseBody
     public List<DTO> getCategoriesById(@RequestParam Integer categoryId) {
         return categoryService.getCategoryByCategoryId(categoryId);
     }
 
-    @GetMapping(value = "/northwind/categories", params = {"name"})
+    @GetMapping(value = "/northwind/categories/", params = {"name"})
     @ResponseBody
     public List<DTO> getCategoriesByName(@RequestParam(required = false) String name) {
         return categoryService.getCategoriesByName(name);

@@ -2,6 +2,7 @@ package com.sparta.ml.northwindrest.controllers;
 
 import com.sparta.ml.northwindrest.dto.DTO;
 import com.sparta.ml.northwindrest.services.EmployeeService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
+@Api(value="employees", description="Operations pertaining to the employees table.")
 public class EmployeeController {
 
     @Resource
@@ -22,7 +24,7 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping(value="/northwind/employees", params={"employeeId"})
+    @GetMapping(value="/northwind/employees/", params={"employeeId"})
     @ResponseBody
     public List<DTO> getEmployeesById(@RequestParam Integer employeeId) {
         return employeeService.getEmployeeByEmployeeId(employeeId);

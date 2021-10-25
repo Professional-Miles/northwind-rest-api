@@ -1,15 +1,24 @@
 package com.sparta.ml.northwindrest.dto;
 
+import io.swagger.annotations.ApiModel;
+
 import java.math.BigDecimal;
 
+@ApiModel(value = "ProductDTO", description = "The model for products.")
 public class ProductDTO extends DTO{
 
     private Integer id;
+
     private String productName;
+
     private String supplierName;
+
     private String categoryName;
+
     private String quantityPerUnit;
+
     private BigDecimal unitPrice;
+
     private Boolean discontinued;
 
     public Integer getId() {
